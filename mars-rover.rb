@@ -9,18 +9,6 @@ class Rover
     @direction = direction
   end
 
-  # def mars
-  #   puts "Mars is big. How big?"
-  #   mars = gets.chomp
-  #
-  #   mars = mars.chars
-  #   mars.map! { |number|
-  #     number.strip
-  #   }
-  #    mars.delete_if { |number|
-  #      number ==""
-  #   }
-
   def instructions(input)
     input.chars.each do |instruction|
       puts instruction
@@ -47,12 +35,38 @@ class Rover
       @x = x - 1
     end
   end
+
+  def turn(letter)
+
+    if letter == "L"
+      case @direction
+      when "N"
+        @direction = "W"
+      when "W"
+        @direction = "S"
+      when "S"
+        @direction = "E"
+      when "E"
+        @direction = "N"
+      end
+
+    if letter == "R"
+      case @direction
+      when "N"
+        @direction = "E"
+      when "E"
+        @direction = "S"
+      when "S"
+        @direction = "W"
+      when "W"
+        @direction = "N"
+      end
+    end
 end
-end
 
 
 
-spirit = Rover.new("Spirit", 0, 0, "E")
+spirit = Rover.new("Spirit", 0, 0, "N")
 
 puts spirit.instructions("RMLMMM")
 
