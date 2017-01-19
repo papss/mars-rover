@@ -12,12 +12,13 @@ class Rover
   def instructions(input)
     input.chars.each do |instruction|
       puts instruction
-    if instruction == "L"
-      turn_left
-    elsif instruction == "R"
-      right
-    else instruction == "M"
-      forward
+      if instruction == "L"
+        turn_left
+      elsif instruction == "R"
+        right
+      else instruction == "M"
+        forward
+      end
     end
   end
 
