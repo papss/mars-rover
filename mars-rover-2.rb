@@ -14,90 +14,90 @@ class Rover
   def plateau
     puts "Mars is big. How big?"
     puts "how large is the x-axis?"
-    @plateau_x = gets.chomp
+    @plateau_x = gets.to_i
     puts "how large is the y-axis?"
-    @plateau_y = gets.chomp
+    @plateau_y = gets.to_i
     puts "The size of Mars is #{@plateau_x}x by #{@plateau_y}y."
   end
 
   def landing
     puts "where did the rover land on the x-axis?"
-    @x = gets.chomp
+    @x = gets.to_i
     puts "where did the rover land on the y-axis?"
-    @y = gets.chomp
+    @y = gets.to_i
     puts "what direction (N, E, S or W) are you facing?"
     @direction = gets.chomp
-      if @x > @plateau_x || @y > @plateau_y
-        return "sorry, #{@name} missed the landing and blew up"
-      # elsif @direction != "N", "E", "S", "W"
-      #   puts "you landed on your butt, and the rover died"
-      else
-        puts "#{@name} landed at #{@x}x, #{@y}y, and is facing #{@direction}."
-      end
+    if @x > @plateau_x
+      return "sorry, #{@name} missed the landing and blew up"
+    elsif @y > @plateau_y
+      return "sorry, #{@name} missed the landing and blew up"
+    # elsif @direction != "N", "E", "S", "W"
+    #   puts "you landed on your butt, and the rover died"
+    else
+      puts "#{@name} landed at #{@x}x, #{@y}y, and is facing #{@direction}."
     end
   end
 
-  def input
+  def commands
     puts "please enter a string of instructions for the rover"
     puts "you can turn (R)ight, (L)eft, or (M)ove forward"
-    input = gets.chomp
-      input.chars.each do |instruction|
-      if instruction = "L" || "R"
-        turn(instruction)
-      else instruction = "M"
+    direction = gets.chomp
+    direction.chars.each do |instruction|
+      if instruction == "L"
+        turn_left
+      elsif instruction == "R"
+        right
+      elsif instruction == "M"
         forward
       end
     end
   end
 
-def turn(letter)
-  if letter == "L"
-    case @direction
-    when "N"
-      @direction = "W"
-    when "W"
-      @direction = "S"
-    when "S"
+  def right
+    if @direction == "N"
       @direction = "E"
-    when "E"
-      @direction = "N"
-    end
-
-  if letter == "R"
-    case @direction
-    when "N"
-      @direction = "E"
-    when "E"
+    elsif @direction == "E"
       @direction = "S"
-    when "S"
+    elsif @direction == "S"
       @direction = "W"
-    when "W"
+    elsif @direction == "W"
       @direction = "N"
     end
   end
-end
 
-def forward
-  if @direction == "N"
-    @y = y + 1
-  elsif @direction == "S"
-    @y = y - 1
-  elsif @direction == "E"
-    @x = x + 1
-  else @direction == "W"
-    @x = x - 1
+  def turn_left
+    if @direction == "N"
+      @direction = "W"
+    elsif @direction == "W"
+      @direction = "S"
+    elsif @direction == "S"
+      @direction = "E"
+    elsif @direction == "E"
+      @direction = "N"
+    end
+  end
+
+  def forward
+    if @direction == "N"
+      @y = y + 1
+    elsif @direction == "S"
+      @y = y - 1
+    elsif @direction == "E"
+      @x = x + 1
+    elsif @direction == "W"
+      @x = x - 1
+    end
+  end
+
+  def final_position
+    puts "#{@name} is at position #{@x}x, #{@y}, and is facing #{@direction}!"
+    puts "Congrats, Mars explored!"
   end
 end
 
-def final_position
-  return "#{@name} is at position #{@x}x, #{@y}, and is facing #{@direction}!"
-  puts "Congrats, Mars explored!"
-end
-
-end
-
-  spirit = Rover.new("Spirit", 0, 0, "N")
+spirit = Rover.new("Spirit", 0, 0, "N")
 
 puts spirit.plateau
 puts spirit.landing
-puts spirit.input
+spirit.commands
+spirit.final_position
